@@ -41,7 +41,8 @@ fi
 
 echo "New tag is $NEW_TAG"
 
-#git tag -a $NEW_TAG -m "$NEW_TAG"
-#git push origin $NEW_TAG
+git tag -a $NEW_TAG -m "$NEW_TAG"
+
+git push origin $NEW_TAG
 
 echo "Done"
