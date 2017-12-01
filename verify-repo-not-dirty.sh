@@ -5,5 +5,5 @@ echo "Git describe returns $GIT_DESC"
 if [[ $GIT_DESC =~ ^.*-dirty$ ]] ;
 then
 	echo Repo is dirty. Please commit first.
-	exit 0
+	exit 1
 fi;
