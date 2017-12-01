@@ -2,6 +2,8 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+source $SCRIPT_DIR/colors.sh
+
 function echoUsage() {
     echo ""
     echo "usage: ./bump-version-push-tag.sh [major|minor|patch]"
@@ -26,12 +28,16 @@ esac
 
 source $SCRIPT_DIR/verify-repo-not-dirty.sh
 
-# Will tag v0.0.1 if no tags are found
 source $SCRIPT_DIR/get-latest-tag.sh
 
-source $SCRIPT_DIR/create-new-tag-for-$version_bump_type-update.sh
-
-echo "Old tag was $LATEST_TAG"
+if [ -z "$LATEST_TAG" ]
+then
+    echo "No tag found... Setting default tag of v0.0.1"
+    NEW_TAG=v0.0.1
+else
+    echo "Old tag was $LATEST_TAG"
+    source $SCRIPT_DIR/create-new-tag-for-$version_bump_type-update.sh
+fi
 
 echo "New tag is $NEW_TAG"
 
