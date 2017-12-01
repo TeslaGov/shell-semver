@@ -28,6 +28,8 @@ esac
 
 source $SCRIPT_DIR/verify-repo-not-dirty.sh
 
+git fetch --tags
+
 source $SCRIPT_DIR/get-latest-tag.sh
 
 if [ -z "$LATEST_TAG" ]
