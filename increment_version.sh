@@ -15,7 +15,18 @@ done
 
 shift $(($OPTIND - 1))
 
-version=$1
+begins_with_v=false
+original_version=$1
+
+# Check if tag begins with 'v'
+if [[ $original_version == v* ]] ;
+then
+    begins_with_v=true
+    version=$(echo -n $original_version | cut -d'v' -f 2)
+else
+    version=$original_version
+fi
+
 
 # Build array from version string.
 
@@ -49,5 +60,10 @@ then
   ((a[2]++))
 fi
 
-echo "${a[0]}.${a[1]}.${a[2]}"
+if [ "$begins_with_v" = true ] ;
+then
+    echo "v${a[0]}.${a[1]}.${a[2]}"
+else
+    echo "${a[0]}.${a[1]}.${a[2]}"
+fi
 
