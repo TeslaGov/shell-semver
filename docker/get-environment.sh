@@ -10,19 +10,7 @@
 # 3) root_project_name:     the basename of repo_dir
 #                           e.g., clarakm-chat
 
-# 4) api_project_name:      the name of the Docker image for the service's API
-#                           e.g., clarakm-chat-api
-
-# 5) api_project_context:   the full path to the service's API directory
-#                           e.g., /Users/kevinchen/dev/teslagov/clarakm/clarakm-chat/api
-
-# 6) ui_project_name:       the name of the Docker image for the service's UI
-#                           e.g., clarakm-chat-ui
-
-# 7) ui_project_context:    the full path to the service's UI directory
-#                           e.g., /Users/kevinchen/dev/teslagov/clarakm/clarakm-chat/ui
-
-# 8) version:               the version of the service, pulled from the latest Git tag
+# 4) version:               the version of the service, pulled from the latest Git tag
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $SCRIPT_DIR/../colors.sh
@@ -99,13 +87,6 @@ fetchTags "$repo_dir"
 setKubeContext
 
 root_project_name=$(basename $repo_dir)
-
-api_project_name=${root_project_name}-api
-ui_project_name=${root_project_name}-ui
-
-api_docker_context=$repo_dir/api
-ui_docker_context=$repo_dir/ui
-
 version=$(getLatestTag)
 
 if [ -z "$version" ]
@@ -116,8 +97,4 @@ fi
 
 #printf "$magenta" "$repo_dir"
 #printf "$magenta" "$root_project_name"
-#printf "$magenta" "$api_project_name"
-#printf "$magenta" "$api_docker_context"
-#printf "$magenta" "$ui_project_name"
-#printf "$magenta" "$ui_docker_context"
 #printf "$magenta" "$version"
