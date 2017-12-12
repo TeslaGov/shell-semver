@@ -8,6 +8,7 @@ ui_docker_context=$repo_dir/ui
 
 printf "$yellow" "❤ Building Docker image for $ui_project_name..."
 rm -rf $ui_docker_context/dist-development-container
+npm --prefix $ui_docker_context install
 npm --prefix $ui_docker_context run build-development-container
 
 source $SCRIPT_DIR/rebuild.sh
