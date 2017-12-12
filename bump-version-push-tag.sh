@@ -30,7 +30,7 @@ source $SCRIPT_DIR/verify-repo-not-dirty.sh
 
 git fetch --tags
 
-source $SCRIPT_DIR/get-latest-tag.sh
+LATEST_TAG=$(git tag --sort=v:refname | tail -n 1)
 
 if [ -z "$LATEST_TAG" ]
 then

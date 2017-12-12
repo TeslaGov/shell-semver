@@ -58,11 +58,11 @@ function setKubeContext() {
 function fetchTags() {
     printf "$yellow" "❤ Fetching latest tags for $1..."
     git -C "$1" fetch --tags
-    printf "$blue" "$(git tag)"
+    printf "$blue" "$(git -C "$1" tag)"
 }
 
 function getLatestTag() {
-    echo -n $(git tag --sort=v:refname | tail -n 1)
+    echo -n $(git -C "$1" tag --sort=v:refname | tail -n 1)
 }
 
 environment=local
@@ -87,7 +87,7 @@ fetchTags "$repo_dir"
 setKubeContext
 
 root_project_name=$(basename $repo_dir)
-version=$(getLatestTag)
+version=$(getLatestTag "$repo_dir")
 
 if [ -z "$version" ]
 then
