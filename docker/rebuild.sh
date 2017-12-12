@@ -10,5 +10,11 @@ function rebuildDockerImage() {
     # e.g., v0.0.1
     version=$3
 
-    docker build --build-arg API_VERSION=$version -t teslagov/$project_name:$version $context --no-cache
+    if [ -z "$4" ]
+    then
+        docker build -t teslagov/$project_name:$version $context --no-cache 
+    else
+        docker build --build-arg API_VERSION=$version -t teslagov/$project_name:$version $context --no-cache
+    fi
 }
+

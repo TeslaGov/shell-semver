@@ -13,4 +13,4 @@ printf "$yellow" "❤ Building Docker image for $api_project_name..."
 
 source $SCRIPT_DIR/rebuild.sh
 
-rebuildDockerImage $api_docker_context $api_project_name $version
+rebuildDockerImage $api_docker_context $api_project_name $version "true"
