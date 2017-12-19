@@ -58,7 +58,6 @@ function setKubeContext() {
 function fetchTags() {
     printf "$yellow" "❤ Fetching latest tags for $1..."
     git -C "$1" fetch --tags
-    printf "$blue" "$(git -C "$1" tag)"
 }
 
 function getLatestTag() {
