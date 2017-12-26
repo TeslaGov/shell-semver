@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# FORKED BY KEVIN CHEN, FROM https://github.com/fmahnke/shell-semver
+
 # Increment a version string using Semantic Versioning (SemVer) terminology.
 
 # Parse command line options.

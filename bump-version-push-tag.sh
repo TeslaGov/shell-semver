@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source $SCRIPT_DIR/colors.sh
 
-function echoUsage() {
+function usage() {
     echo ""
     echo "usage: ./bump-version-push-tag.sh [major|minor|patch]"
     echo ""
@@ -16,17 +16,28 @@ function echoUsage() {
 }
 
 if [ $# -lt 1 ]; then
-    echoUsage
+    usage
     exit 1
 fi
 
 # Ensure the selected environment is valid.
 case "$1" in
-            major|minor|patch) version_bump_type=$1;;
-            *) echoUsage; exit 1;;
+    major) semver_flag=-M
+           ;;
+    minor) semver_flag=-m
+           ;;
+    patch) semver_flag=-p
+           ;;
+    *) usage; exit 1;;
 esac
 
-source $SCRIPT_DIR/verify-repo-not-dirty.sh
+GIT_DESC="$(git describe --always --tags --dirty)"
+echo "Git describe returns $GIT_DESC"
+if [[ $GIT_DESC =~ ^.*-dirty$ ]] ;
+then
+	echo Repo is dirty. Please commit first.
+	exit 1
+fi
 
 git fetch --tags
 
@@ -38,13 +49,12 @@ then
     NEW_TAG=v0.0.1
 else
     echo "Old tag was $LATEST_TAG"
-    source $SCRIPT_DIR/create-new-tag-for-$version_bump_type-update.sh
+    NEW_TAG=$($SCRIPT_DIR/semver/increment_version.sh $semver_flag $LATEST_TAG)
 fi
 
 echo "New tag is $NEW_TAG"
 
-git tag -a $NEW_TAG -m "$NEW_TAG"
-
-git push origin $NEW_TAG
+#git tag -a $NEW_TAG -m "$NEW_TAG"
+#git push origin $NEW_TAG
 
 echo "Done"
