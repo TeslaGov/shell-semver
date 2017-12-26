@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source $SCRIPT_DIR/colors.sh
 
-function usage() {
+usage() {
     echo ""
     echo "usage: ./bump-version-push-tag.sh [major|minor|patch] [pathToGitRepo]"
     echo ""
@@ -15,7 +15,7 @@ function usage() {
     echo "(Case matters. 'major' is a valid argument. 'MAJOR' is not.)"
 }
 
-function ensure_repo_not_dirty() {
+ensure_repo_not_dirty() {
     local repo_path
     repo_path=$1
     git_description="$(git -C $repo_path describe --always --tags --dirty)"
@@ -26,13 +26,13 @@ function ensure_repo_not_dirty() {
     fi
 }
 
-function fetch_tags() {
+fetch_tags() {
     local repo_path
     repo_path=$1
     git -C $repo_path fetch --tags
 }
 
-function get_latest_tag() {
+get_latest_tag() {
     local repo_path default_tag git_tag
 
     repo_path=$1
@@ -50,7 +50,7 @@ function get_latest_tag() {
     echo -n $git_tag
 }
 
-#function get_incremented_tag() {
+#get_incremented_tag() {
 #}
 
 if [[ $# -lt 1 ]] || [[ $# -gt 2 ]]; then

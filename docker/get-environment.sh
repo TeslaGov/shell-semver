@@ -15,7 +15,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $SCRIPT_DIR/../colors.sh
 
-function echoUsage() {
+echo_usage() {
     echo ""
     echo "usage: ./rebuild-image.sh <repo_dir> [local|minikube]"
     echo ""
@@ -26,7 +26,7 @@ function echoUsage() {
     echo "(Case matters. 'minikube' is a valid argument. 'MINIKUBE' is not.)"
 }
 
-function assertIsGitRepo() {
+assert_is_git_repo() {
     if [ ! -d "$1" ];
     then
         printf "$red" "✗ $1 is not a directory"
@@ -40,7 +40,7 @@ function assertIsGitRepo() {
     fi
 }
 
-function setKubeContext() {
+set_kube_context() {
     # Sets the kube context if minikube is specified as the environment
     if [ "$environment" = "minikube" ]; then
         kube_context=minikube
@@ -55,38 +55,38 @@ function setKubeContext() {
     fi
 }
 
-function fetchTags() {
+fetch_tags() {
     printf "$yellow" "❤ Fetching latest tags for $1..."
     git -C "$1" fetch --tags
 }
 
-function getLatestTag() {
+get_latest_tag() {
     echo -n $(git -C "$1" tag --sort=v:refname | tail -n 1)
 }
 
 environment=local
 
 if [ $# -gt 3 ] || [ $# -lt 1 ] ; then
-    echoUsage
+    echo_usage
     exit 1
 fi
 
 repo_dir=$(realpath "$1")
-assertIsGitRepo "$repo_dir"
+assert_is_git_repo "$repo_dir"
 
 if [ $# == 2 ]; then
     # Ensure the selected environment is valid.
     case "$2" in
         minikube|local) environment=$2;;
-        *) echoUsage; exit 1;;
+        *) echo_usage; exit 1;;
     esac
 fi
 
-fetchTags "$repo_dir"
-setKubeContext
+fetch_tags "$repo_dir"
+set_kube_context
 
 root_project_name=$(basename $repo_dir)
-version=$(getLatestTag "$repo_dir")
+version=$(get_latest_tag "$repo_dir")
 
 if [ -z "$version" ]
 then
