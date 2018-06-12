@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-function rebuildDockerImage() {
+function rebuild_docker_image() {
     # Should be a full path to a dir with a Dockerfile
-    context=$1
+    local context=$1
 
     # Just the name of the aforementioned directory
-    project_name=$2
+    local project_name=$2
 
     # e.g., v0.0.1
-    version=$3
+    local version=$3
 
     if [ -z "$4" ]
     then

@@ -13,4 +13,4 @@ npm --prefix $ui_docker_context run build-development-container
 
 source $SCRIPT_DIR/rebuild.sh
 
-rebuildDockerImage $ui_docker_context $ui_project_name $version
+rebuild_docker_image $ui_docker_context $ui_project_name $version
