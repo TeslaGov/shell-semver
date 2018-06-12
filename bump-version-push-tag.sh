@@ -74,7 +74,7 @@ else
     repo_path=$(realpath "$2")
 fi
 
-ensureRepoNotDirty "$repo_path"
+ensure_repo_not_dirty "$repo_path"
 fetch_tags "$repo_path"
 
 current_tag=$(get_latest_tag "$repo_path" "v0.0.1")
